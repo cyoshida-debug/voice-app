@@ -338,7 +338,7 @@ export default function App() {
     const key = apiKeyRef.current;
     if (!key) throw new Error('API_KEY_NOT_SET');
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${key}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`;
     const payload = {
       contents: [{ parts: [{ text }] }],
       systemInstruction: { parts: [{ text: systemPromptText }] },
