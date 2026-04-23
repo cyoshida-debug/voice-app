@@ -1,0 +1,17 @@
+{
+  "name": "リアルタイム文字起こしアプリ",
+  "short_name": "文字起こし",
+  "description": "音声をリアルタイムで文字起こしし、AIで整形するアプリ",
+  "start_url": "./",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
