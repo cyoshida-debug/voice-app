@@ -338,7 +338,7 @@ export default function App() {
     const key = apiKeyRef.current;
     if (!key) throw new Error('API_KEY_NOT_SET');
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`;
     const payload = {
       contents: [{ parts: [{ text }] }],
       systemInstruction: { parts: [{ text: systemPromptText }] },
@@ -352,7 +352,10 @@ export default function App() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload),
           });
-          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          if (!res.ok) {
+            const body = await res.text().catch(() => '');
+            throw new Error(`HTTP ${res.status}: ${body.slice(0, 200)}`);
+          }
           const result = await res.json();
           return result.candidates?.[0]?.content?.parts?.[0]?.text || '整形結果を取得できませんでした。';
         } catch (err) {
@@ -398,7 +401,7 @@ export default function App() {
         setAiError('APIキーが設定されていません。設定タブから入力してください。');
       } else {
         console.error('AI format error:', err);
-        setAiError('AIによる整形に失敗しました。APIキーまたはネットワークを確認してください。');
+        setAiError(`AIによる整形に失敗しました。エラー: ${err.message}`);
       }
     } finally {
       setIsAiLoading(false);
